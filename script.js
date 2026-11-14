@@ -1610,7 +1610,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function prikaziSekciju(id, azurirajURL = true) {
     if (!SEKCIJE.includes(id)) id = 'pregled';
     const prebaci = () => {
-      document.querySelectorAll('#mainMenu .menu-item').forEach(m => {
+      document.querySelectorAll('#mainMenu .menu-item[data-section]').forEach(m => {
         const a = m.dataset.section === id;
         m.classList.toggle('active', a);
         m.setAttribute('aria-current', a ? 'page' : 'false');
@@ -1673,7 +1673,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('#mainMenu .menu-item').forEach(b =>
+    document.querySelectorAll('#mainMenu .menu-item[data-section]').forEach(b =>
       b.addEventListener('click', () => prikaziSekciju(b.dataset.section)));
     prikaziSekciju(new URLSearchParams(location.search).get('section') || 'pregled', false);
     oznaci(document.body);
