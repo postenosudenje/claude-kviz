@@ -128,9 +128,9 @@
       <button class="menu-item" data-section="usporedba" type="button">
         <i class="fas fa-code-compare" aria-hidden="true"></i> Usporedba
       </button>
-      <a class="menu-item" href="/igra.html">
+      <button class="menu-item" data-section="kviz" type="button">
         <i class="fas fa-gamepad" aria-hidden="true"></i> Kviz
-      </a>
+      </button>
     </nav>
 
     <!-- Season menu (Drop-down stil) -->
@@ -393,11 +393,21 @@
     </section>
 
   </div>
+
+    <!-- KVIZ -->
+    <section id="section-kviz" class="section-panel">
+      <h2 class="section-title" style="margin-top:0;">
+        <i class="fas fa-gamepad" aria-hidden="true"></i> Tko želi biti VAR-ovac?
+      </h2>
+      <p>15 pitanja iz stvarnih podataka o suđenju u HNL-u. Jedan pogrešan odgovor završava igru. Imaš 3 VAR jokera, svi su publika: svaki možeš iskoristiti jednom, najviše jedan po pitanju.</p>
+      <div class="igra" id="igra" aria-live="polite"><p>Učitavam podatke…</p></div>
+    </section>
+
   </main>
 
   <footer class="seo-footer-text" role="contentinfo">
     <p id="zadnjeAzurirano" class="updated-note" hidden></p>
-    <p><a href="/igra.html">Kviz: Tko želi biti VAR-ovac? 15 pitanja o suđenju u HNL-u</a></p>
+    <p><a href="/?section=kviz">Kviz: Tko želi biti VAR-ovac? 15 pitanja o suđenju u HNL-u</a></p>
     <h2>O platformi Pošteno suđenje</h2>
     <p>
       <strong>Pošteno suđenje</strong> okuplja i analizira podatke o sudačkim odlukama u
@@ -456,6 +466,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
 <script src="script.js" defer></script>
+<script src="kviz.js" defer></script>
 
 <noscript>
   <div style="padding:2rem; text-align:center; background:#161616; border-radius:16px; margin-top:2rem; color:#f5f5f5;">
