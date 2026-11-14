@@ -107,7 +107,7 @@ try {
   const lm = (meta.updated || new Date().toISOString()).slice(0, 10);
   const url = (p, f, pr) => `  <url><loc>${SJ}${p}</loc><lastmod>${lm}</lastmod><changefreq>${f}</changefreq><priority>${pr}</priority></url>`;
   const sm = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` + [
-    url('/', 'daily', '1.0'), url('/?section=statistika', 'weekly', '0.8'), url('/?section=utakmice', 'daily', '0.8'), url('/?section=usporedba', 'weekly', '0.7'), url('/igra.html', 'monthly', '0.6'),
+    url('/', 'daily', '1.0'), url('/?section=statistika', 'weekly', '0.8'), url('/?section=utakmice', 'daily', '0.8'), url('/?section=usporedba', 'weekly', '0.7'), url('/?section=kviz', 'weekly', '0.7'),
     ...stranice.map(p => url(p, 'weekly', '0.6'))].join('\n') + '\n</urlset>\n';
   if ((await readFile('sitemap.xml', 'utf8').catch(() => '')) !== sm) await writeFile('sitemap.xml', sm);
   console.log(`stranice: ${stranice.length}`);
