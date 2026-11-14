@@ -1512,3 +1512,5 @@ td { padding: .9rem 1rem; line-height: 1.4; }
   th, td { padding: .7rem .6rem; }
   .hero-intro-text { max-width: none; }
 }
+
+a.menu-item, a.menu-item:visited { text-decoration: none; }
