@@ -14,3 +14,19 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Čiste adrese rade i kad "Pretty URLs" nisu uključeni u Netlifyju
+[[redirects]]
+  from = "/igra"
+  to = "/igra.html"
+  status = 200
+
+[[redirects]]
+  from = "/sudac/:ime"
+  to = "/sudac/:ime.html"
+  status = 200
+
+[[redirects]]
+  from = "/klub/:ime"
+  to = "/klub/:ime.html"
+  status = 200
