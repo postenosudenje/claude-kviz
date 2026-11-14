@@ -51,32 +51,6 @@ if (promjena) {
   if (sm) await writeFile('sitemap.xml', sm.replace(/<lastmod>[^<]*<\/lastmod>/g, `<lastmod>${danas}</lastmod>`));
 }
 
-// Prerender: crawlabilan sažetak sudaca aktivne sezone u index.html
-try {
-  const podaci = JSON.parse(await readFile('data/aktivna.json', 'utf8'));
-  const n = v => Number(String(v ?? '').replace(',', '.')) || 0;
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const po = {};
-  for (const u of podaci) {
-    const ime = String(u['Glavni sudac'] || '').trim();
-    if (!ime) continue;
-    const s = po[ime] ??= { utakmica: 0, zuti: 0, crveni: 0, penali: 0 };
-    s.utakmica++; s.zuti += n(u['Žuti D']) + n(u['Žuti G']);
-    s.crveni += n(u['Crveni D']) + n(u['Crveni G']); s.penali += n(u['Penal D']) + n(u['Penal G']);
-  }
-  const klubovi = [...new Set(podaci.flatMap(u => [u['Domaćin'], u.Gost]).map(x => String(x || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'hr'));
-  const redovi = Object.entries(po).sort((a, b) => b[1].utakmica - a[1].utakmica || a[0].localeCompare(b[0], 'hr')).slice(0, 25)
-    .map(([ime, s]) => `<tr><td><a href="/sudac/${slug(ime)}">${esc(ime)}</a></td><td>${s.utakmica}</td><td>${s.zuti}</td><td>${s.crveni}</td><td>${s.penali}</td></tr>`).join('');
-  const blok = redovi ? `<section class="seo-summary" aria-labelledby="seoSazetak">
-    <h2 id="seoSazetak">Suci SuperSport HNL-a 2026/27: kartoni i penali</h2>
-    <div class="tablica-wrap"><table><thead><tr><th>Sudac</th><th>Utakmica</th><th>Žuti</th><th>Crveni</th><th>Penali</th></tr></thead><tbody>${redovi}</tbody></table></div>
-    <p>Klubovi: ${klubovi.map(k => `<a href="/klub/${slug(k)}">${esc(k)}</a>`).join(' · ')}</p>
-  </section>` : '';
-  const html = await readFile('index.html', 'utf8');
-  const novi = html.replace(/(<!-- PRERENDER:START -->)[\s\S]*?(<!-- PRERENDER:END -->)/, `$1\n  ${blok}\n  $2`);
-  if (novi !== html) { await writeFile('index.html', novi); console.log('prerender osvježen'); }
-} catch (e) { console.warn('prerender preskočen:', e.message); }
-
 // Statične stranice sudaca i klubova (SEO, dijeljenje)
 try {
   const sezone = [['2026/27', 'aktivna'], ['2025/26', '2025-26']];
