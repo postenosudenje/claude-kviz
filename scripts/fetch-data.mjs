@@ -71,13 +71,13 @@ try {
 </head><body><main style="max-width:960px;margin:0 auto;padding:1.5rem 0">
 <p><a href="/">← Pošteno suđenje</a></p><h1>${esc(h1)}</h1><p>${uvod}</p>${tijelo}
 </main></body></html>`;
-  const zapisi = async (put, html) => { const f = put.slice(1) + '.html'; await mkdir(f.split('/')[0], { recursive: true });
+  const zapisi = async (put, html) => { const f = put.slice(1); await mkdir(f.split('/')[0], { recursive: true });
     if ((await readFile(f, 'utf8').catch(() => '')) !== html) await writeFile(f, html); };
   const stranice = [];
 
   const suci = [...new Set(sve.map(u => String(u['Glavni sudac'] || '').trim()).filter(Boolean))];
   for (const ime of suci) {
-    const r = sve.filter(u => String(u['Glavni sudac'] || '').trim() === ime), put = `/sudac/${slug(ime)}`;
+    const r = sve.filter(u => String(u['Glavni sudac'] || '').trim() === ime), put = `/sudac/${slug(ime)}.html`;
     const t = zbroj(r, ['D', 'G']);
     const po = sezone.map(([s]) => [s, r.filter(u => u._s === s)]).filter(([, x]) => x.length);
     const klubovi = {}; r.forEach(u => [u['Domaćin'], u.Gost].forEach(k => { k = String(k || '').trim(); if (k) klubovi[k] = (klubovi[k] || 0) + 1; }));
@@ -85,12 +85,12 @@ try {
     await zapisi(put, stranica(`${ime} – statistika suca | Pošteno suđenje`, opis, put, ime, esc(opis),
       tab('Po sezonama', ['Sezona', 'Utakmica', 'Žuti', 'Crveni', 'Penali', 'VAR priznat', 'VAR poništen'], po.map(([s, x]) => [s, x.length, ...zbroj(x, ['D', 'G'])])) +
       tab('Utakmice', ['Sezona', 'Kolo', 'Domaćin', 'Gost', 'Žuti', 'Crveni', 'Penali'], r.slice().sort((a, b) => b._s.localeCompare(a._s) || num(b.Kolo) - num(a.Kolo)).slice(0, 20)
-        .map(u => [u._s, num(u.Kolo), `<a href="/klub/${slug(u['Domaćin'])}">${esc(u['Domaćin'])}</a>`, `<a href="/klub/${slug(u.Gost)}">${esc(u.Gost)}</a>`, ...zbroj([u], ['D', 'G']).slice(0, 3)]))));
+        .map(u => [u._s, num(u.Kolo), `<a href="/klub/${slug(u['Domaćin'])}.html">${esc(u['Domaćin'])}</a>`, `<a href="/klub/${slug(u.Gost)}.html">${esc(u.Gost)}</a>`, ...zbroj([u], ['D', 'G']).slice(0, 3)]))));
     stranice.push(put);
   }
   const klubovi = [...new Set(sve.flatMap(u => [u['Domaćin'], u.Gost]).map(x => String(x || '').trim()).filter(Boolean))];
   for (const ime of klubovi) {
-    const r = sve.filter(u => [u['Domaćin'], u.Gost].map(x => String(x || '').trim()).includes(ime)), put = `/klub/${slug(ime)}`;
+    const r = sve.filter(u => [u['Domaćin'], u.Gost].map(x => String(x || '').trim()).includes(ime)), put = `/klub/${slug(ime)}.html`;
     const strana = u => (String(u['Domaćin'] || '').trim() === ime ? ['D'] : ['G']);
     const zb = rows => ['Žuti', 'Crveni', 'Penal', 'VAR priznat', 'VAR poništen'].map(k => rows.reduce((z, u) => z + num(u[`${k} ${strana(u)[0]}`]), 0));
     const t = zb(r);
@@ -100,14 +100,14 @@ try {
     await zapisi(put, stranica(`${ime} – statistika suđenja | Pošteno suđenje`, opis, put, ime, esc(opis),
       tab('Po sezonama', ['Sezona', 'Utakmica', 'Žuti', 'Crveni', 'Penali', 'VAR priznat', 'VAR poništen'], po.map(([s, x]) => [s, x.length, ...zb(x)])) +
       tab('Suci koji su sudili klubu', ['Sudac', 'Utakmica', 'Žuti', 'Crveni', 'Penali'], Object.entries(suci2).sort((a, b) => b[1].length - a[1].length)
-        .map(([s, x]) => [`<a href="/sudac/${slug(s)}">${esc(s)}</a>`, x.length, ...zb(x).slice(0, 3)]))));
+        .map(([s, x]) => [`<a href="/sudac/${slug(s)}.html">${esc(s)}</a>`, x.length, ...zb(x).slice(0, 3)]))));
     stranice.push(put);
   }
   const meta = JSON.parse(await readFile('data/meta.json', 'utf8').catch(() => '{}'));
   const lm = (meta.updated || new Date().toISOString()).slice(0, 10);
   const url = (p, f, pr) => `  <url><loc>${SJ}${p}</loc><lastmod>${lm}</lastmod><changefreq>${f}</changefreq><priority>${pr}</priority></url>`;
   const sm = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` + [
-    url('/', 'daily', '1.0'), url('/?section=statistika', 'weekly', '0.8'), url('/?section=utakmice', 'daily', '0.8'), url('/?section=usporedba', 'weekly', '0.7'), url('/igra', 'monthly', '0.6'),
+    url('/', 'daily', '1.0'), url('/?section=statistika', 'weekly', '0.8'), url('/?section=utakmice', 'daily', '0.8'), url('/?section=usporedba', 'weekly', '0.7'), url('/igra.html', 'monthly', '0.6'),
     ...stranice.map(p => url(p, 'weekly', '0.6'))].join('\n') + '\n</urlset>\n';
   if ((await readFile('sitemap.xml', 'utf8').catch(() => '')) !== sm) await writeFile('sitemap.xml', sm);
   console.log(`stranice: ${stranice.length}`);
