@@ -1513,4 +1513,26 @@ td { padding: .9rem 1rem; line-height: 1.4; }
   .hero-intro-text { max-width: none; }
 }
 
-a.menu-item, a.menu-item:visited { text-decoration: none; }
+/* ===== Kviz (sekcija) ===== */
+  .igra { max-width: 680px; margin: 0 auto; }
+  .igra .opcije { display: grid; gap: .6rem; margin: 1.25rem 0; }
+  .igra button { font: inherit; cursor: pointer; position: relative; overflow: hidden; padding: .85rem 1rem; min-height: 48px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg-2); color: var(--text); text-align: left; transition: border-color .15s, background-color .15s, opacity .15s; }
+  .igra button:hover:not(:disabled) { border-color: var(--yellow); }
+  .igra button:disabled { cursor: default; }
+  .igra button.odabrano { border-color: var(--yellow); background: var(--yellow-soft); }
+  .igra button.tocno { background: rgba(34,197,94,.2); border-color: #22c55e; }
+  .igra button.krivo { background: rgba(239,68,68,.2); border-color: var(--red); }
+  .igra button.skriveno { opacity: .25; }
+  .igra .primarno { background: var(--yellow); color: #000; font-weight: 700; border-color: var(--yellow); text-align: center; width: 100%; }
+  .igra .slovo { display: inline-block; width: 1.6rem; font-weight: 800; color: var(--yellow); }
+  .igra .bar { position: absolute; left: 0; bottom: 0; height: 4px; width: var(--p); background: var(--yellow); }
+  .igra .pct { float: right; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+  .igra .ljestvica { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; margin: 1rem 0; }
+  .igra .ljestvica span { height: 8px; border-radius: 4px; background: var(--border); }
+  .igra .ljestvica .gotovo { background: var(--yellow); }
+  .igra .ljestvica .sada { background: var(--yellow); box-shadow: 0 0 0 2px var(--yellow-soft); }
+  .igra .jokeri { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+  .igra .jokeri button { text-align: center; font-size: .85rem; padding: .6rem .4rem; }
+  .igra .jokeri button:disabled { opacity: .35; text-decoration: line-through; }
+  .igra .status { color: var(--text-muted); font-size: .9rem; }
+  .igra h2 { font-size: clamp(1.15rem, 1rem + 1vw, 1.5rem); line-height: 1.3; margin-top: .75rem; }
