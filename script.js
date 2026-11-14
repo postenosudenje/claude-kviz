@@ -133,7 +133,8 @@ function updateSEOForSection(section) {
     pregled: 'Pošteno suđenje | Analiza sudaca, klubova i utakmica HNL-a',
     statistika: 'Statistika sudaca i klubova | Pošteno suđenje – HNL analiza',
     utakmice: 'Utakmice po kolima | Pošteno suđenje – HNL analiza',
-    usporedba: 'Usporedba sudaca i klubova | Pošteno suđenje – HNL'
+    usporedba: 'Usporedba sudaca i klubova | Pošteno suđenje – HNL',
+    kviz: 'Kviz: Tko želi biti VAR-ovac? | Pošteno suđenje'
   };
   document.title = titles[section] || titles.pregled;
 }
@@ -1568,18 +1569,20 @@ document.addEventListener("DOMContentLoaded", () => {
 // patch.js — učitati NAKON script.js: <script src="patch.js" defer></script>
 // Nadjačava postojeće globalne funkcije; kasnije ih spojite u script.js.
 (() => {
-  const SEKCIJE = ['pregled', 'statistika', 'utakmice', 'usporedba'];
+  const SEKCIJE = ['pregled', 'statistika', 'utakmice', 'usporedba', 'kviz'];
   const OPISI = {
     pregled: 'Statistika suđenja u SuperSport HNL-u: kartoni, penali i VAR odluke po sucu i klubu, ažurirano nakon svakog kola.',
     statistika: 'Detaljna statistika sudaca i klubova SuperSport HNL-a: žuti i crveni kartoni, penali, VAR i prosjeci po utakmici.',
     utakmice: 'Sve utakmice SuperSport HNL-a po kolima: sudac, kartoni, penali i VAR odluke za svaku utakmicu.',
-    usporedba: 'Usporedite suce ili klubove SuperSport HNL-a: kartoni, penali i VAR odluke jedni uz druge.'
+    usporedba: 'Usporedite suce ili klubove SuperSport HNL-a: kartoni, penali i VAR odluke jedni uz druge.',
+    kviz: 'Kviz s 15 pitanja o suđenju u SuperSport HNL-u, pitanja izvučena iz stvarnih podataka, uz 3 VAR jokera.'
   };
   const NASLOVI = {
     pregled: 'Pošteno suđenje | Analiza sudaca, klubova i utakmica HNL-a',
     statistika: 'Statistika sudaca i klubova | Pošteno suđenje – HNL analiza',
     utakmice: 'Utakmice po kolima | Pošteno suđenje – HNL analiza',
-    usporedba: 'Usporedba sudaca i klubova | Pošteno suđenje – HNL'
+    usporedba: 'Usporedba sudaca i klubova | Pošteno suđenje – HNL',
+    kviz: 'Kviz: Tko želi biti VAR-ovac? | Pošteno suđenje'
   };
 
   // 1) Sigurna tema (localStorage može baciti grešku u privatnom načinu)
